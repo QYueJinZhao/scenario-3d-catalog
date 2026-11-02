@@ -2,6 +2,8 @@
 
 [Scenario 官方 3D Collection](https://huggingface.co/datasets/scenario-labs/3d-collection)（1,342 个 AI 生成的 3D 资产，CC-BY-4.0）的**语义分类浏览目录**。
 
+> 🌐 **在线浏览站点**：<https://qyuejinzhao.github.io/scenario-3d-catalog/>
+
 原数据集只有 `workflow` / `model` 等生成维度字段、没有语义类别，本仓库把全部 1,342 个资产按预览图内容整理为 9 个语义分类，方便按需找素材：
 
 | 分类 | 数量 | 分类 | 数量 |
@@ -14,7 +16,7 @@
 
 ## 使用
 
-- **在线浏览**：GitHub Pages 上的 `index.html`（分类 tab + 搜索 + 缩略图右下角 `⬇ 格式` 按钮直达 Hugging Face 文件下载路径，点卡片查看详情）
+- **在线浏览**：<https://qyuejinzhao.github.io/scenario-3d-catalog/>（分类 tab + 搜索 + 缩略图右下角 `⬇ 格式` 按钮直达 Hugging Face 文件下载路径，点卡片查看详情）
 - **程序读取**：[`data/catalog.json`](data/catalog.json) —— 每条含 `id / cat / catZh / workflow / model / prompt / thumb / glb / files[]`，`glb` 与 `files[].url` 均为 Hugging Face 直链
 - 文件本体（`output.glb` 等）**不放在本仓库**，只存缩略图与直链，点击即从 HF 下载
 
