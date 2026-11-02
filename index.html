@@ -29,8 +29,10 @@
   .grid { max-width: 1240px; margin: 12px auto 60px; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform .15s, border-color .15s; display: flex; flex-direction: column; }
   .card:hover { transform: translateY(-3px); border-color: var(--acc); }
-  .thumb-wrap { aspect-ratio: 3 / 2; background: #0c0c10; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .thumb-wrap { aspect-ratio: 3 / 2; background: #0c0c10; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
   .card img { width: 100%; height: 100%; object-fit: cover; }
+  .card .dl { position: absolute; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px; border-radius: 999px; background: rgba(14,14,18,.82); border: 1px solid rgba(255,210,80,.55); color: var(--acc); font-size: 11px; font-weight: 600; text-decoration: none; backdrop-filter: blur(4px); transition: all .15s; }
+  .card .dl:hover { background: var(--acc); color: #141410; border-color: var(--acc); }
   .card .info { padding: 9px 11px 11px; }
   .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; margin-right: 4px; margin-bottom: 4px; }
   .cat-character { background: #4a3312; color: #ffcf6e; } .cat-animal { background: #123a2c; color: #6fe0b0; }
@@ -127,13 +129,16 @@ function render() {
     const card = document.createElement("div");
     card.className = "card";
     const fmts = [...new Set((it.files || []).map(f => f.format.split(",")[0].trim()))].slice(0, 4);
+    const mainFile = it.glb ? { url: it.glb, fmt: "GLB" } : ((it.files && it.files[0]) ? { url: it.files[0].url, fmt: (it.files[0].format || "FILE").toUpperCase() } : null);
     card.innerHTML =
-      '<div class="thumb-wrap"><img loading="lazy" src="' + it.thumb + '" alt=""></div>' +
+      '<div class="thumb-wrap"><img loading="lazy" src="' + it.thumb + '" alt="">' +
+      (mainFile ? '<a class="dl" href="' + mainFile.url + '" target="_blank" rel="noopener" title="从 Hugging Face 下载 ' + mainFile.fmt + '" onclick="event.stopPropagation()">⬇ ' + mainFile.fmt + '</a>' : '') +
+      '</div>' +
       '<div class="info"><span class="badge cat-' + it.cat + '">' + it.catZh + '</span>' +
       (it.glb ? '<span class="fmt">GLB</span>' : '') +
       fmts.filter(f => f.toUpperCase() !== "GLB").map(f => '<span class="fmt">' + f.toUpperCase() + '</span>').join("") +
       '<div class="model">' + it.model + '</div></div>';
-    card.onclick = () => openLb(it);
+    card.onclick = (e) => { if (e.target.closest(".dl")) return; openLb(it); };
     frag.appendChild(card);
   }
   grid.appendChild(frag);

@@ -14,7 +14,7 @@
 
 ## 使用
 
-- **在线浏览**：GitHub Pages 上的 `index.html`（分类 tab + 搜索 + 卡片点击查看详情/下载）
+- **在线浏览**：GitHub Pages 上的 `index.html`（分类 tab + 搜索 + 缩略图右下角 `⬇ 格式` 按钮直达 Hugging Face 文件下载路径，点卡片查看详情）
 - **程序读取**：[`data/catalog.json`](data/catalog.json) —— 每条含 `id / cat / catZh / workflow / model / prompt / thumb / glb / files[]`，`glb` 与 `files[].url` 均为 Hugging Face 直链
 - 文件本体（`output.glb` 等）**不放在本仓库**，只存缩略图与直链，点击即从 HF 下载
 
